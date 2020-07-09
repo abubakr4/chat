@@ -15,11 +15,10 @@
   </div>
   <main id="chats">
     <div id="messages"></div>
-    <form id="msg-area" method="POST" action="/chats">
+    <div id="msgForm">
         <input type="text" name="msg" id="msg">
-        <button type="submit">send</button>
-    </form>
-    <% console.log("ssada")%>
+        <button type="submit" onclick="sendBtn()" >send</button>
+    </div>
   </main>
   <div class="header-bottom">
       <a href="/My_pictures">My Pictures</a>

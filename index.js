@@ -5,10 +5,10 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const server = require('./httpexport');
-const io = require('./socket');
-// const http = require('http');
-// const socketio = require('socket.io');
+// const server = require('./httpexport');
+// const io = require('./socket');
+const http = require('http');
+const socketio = require('socket.io');
 
 const app = express();
 
@@ -32,14 +32,23 @@ const chats = require('./routes/chats');
 app.use('/', contacts);
 app.use('/chats', chats);
 
-// const server = http.createServer(app);
-// const io = socketio(server);
+const server = http.createServer(app);
+const io = socketio(server);
 
 io.on('connection', (socket) => {
 
-    console.log(socket);
-    console.log("welcome to your chats");
+    socket.emit('welcomeMsg', 'welcome buddy');
 
+
+    socket.on('disconnection', () => {
+        console.log("dis");
+        io.emit("disconnect", "user name disconnected");
+    });
+
+    socket.on('chatMsg1', (msg) => {
+        console.log("soul");
+        console.log(msg);
+    });
 });
 
 const PORT = 3000 || process.env.PORT;
